@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ujjwal Aditya | Portfolio</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #3573f6;
+      --text: #fff;
+      --bg: #181f32;
+      --card: #23273e;
+      --muted: #b0bac9;
+      --accent: #3573f6;
+    }
+    [data-theme="light"] {
+      --bg: #f7faff;
+      --text: #23273e;
+      --card: #fff;
+      --muted: #3573f6;
+    }
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      min-height: 100vh;
+      transition: background 0.5s, color 0.5s;
+      overflow: hidden; /* Disable scroll! */
+    }
+    nav {
+      width: 100%;
+      padding: 0 36px;
+      background: var(--card);
+      box-sizing: border-box;
+      top: 0;
+      position: sticky;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      border-bottom: 1.5px solid rgba(81, 151, 255, 0.09);
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--accent);
+      letter-spacing: 1.2px;
+    }
+    .nav-items {
+      display: flex;
+      gap: 34px;
+      align-items: center;
+    }
+    .nav-items a {
+      color: var(--text);
+      font-size: 1.03rem;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 12px 0 12px 0;
+      border-bottom: 2px solid transparent;
+      transition: border-bottom 0.24s, color 0.22s;
+      cursor: pointer;
+    }
+    .nav-items a.active,
+    .nav-items a:hover {
+      border-bottom: 2.5px solid var(--primary);
+      color: var(--primary);
+    }
+    .toggle-btn {
+      padding: 6px 15px;
+      border-radius: 7px;
+      border: none;
+      font-weight: 700;
+      font-size: 1.15rem;
+      background: none;
+      color: var(--text);
+      cursor: pointer;
+      transition: color 0.16s, background 0.16s;
+    }
+    .toggle-btn:hover {
+      color: var(--primary);
+      background: rgba(53, 115, 246, 0.08);
+    }
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 18px 0 18px;
+      height: calc(100vh - 64px - 56px); /* nav and footer height adjust */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .section-view {
+      display: none;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: 32px 16px 10px 16px;
+      box-sizing: border-box;
+      animation: fadeIn 0.5s;
+      background: var(--bg);
+    }
+    .section-view.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0);}
+    }
+    h2.section-title {
+      font-weight: 800;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      color: var(--primary);
+      border-bottom: 3px solid var(--primary);
+      display: inline-block;
+      padding-bottom: 4px;
+    }
+    /* Hero Section */
+    .hero-hi {
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .hero-name {
+      font-size: 2.55rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 10px;
+      letter-spacing: 0.8px;
+    }
+    .hero-title {
+      font-size: 1.17rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      color: var(--text);
+    }
+    .hero-desc {
+      color: var(--muted);
+      font-size: 1.08rem;
+      font-weight: 500;
+      margin-bottom: 22px;
+      border-left: 2.4px solid var(--primary);
+      padding-left: 14px;
+      line-height: 1.62;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .hero-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      padding: 12px 19px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      box-shadow: 0 4px 18px rgba(53, 115, 246, 0.1);
+      cursor: pointer;
+      transition: background 0.18s;
+      text-decoration: none;
+    }
+    .hero-btn.secondary {
+      background: var(--card);
+      color: var(--primary);
+      border: 1.3px solid var(--primary);
+    }
+    .hero-btn.secondary:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    /* Links Row */
+    .hero-links {
+      display: flex;
+      gap: 20px;
+      font-size: 1.3rem;
+      margin-top: 4px;
+    }
+    .hero-links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .hero-links a:hover {
+      color: var(--primary);
+    }
+    /* Projects Section */
+    .projects-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+    }
+    .project-card {
+      background: var(--card);
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(53, 115, 246, 0.16);
+      width: 265px;
+      padding: 18px 14px;
+      margin: 12px 0;
+      transition: transform 0.22s;
+      display: flex;
+      flex-direction: column;
+      color: var(--text);
+    }
+    .project-card:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 8px 36px rgba(53, 115, 246, 0.3);
+    }
+    .project-title { font-weight: 700; font-size: 1.18rem; color: var(--primary); margin-bottom: 8px; }
+    .project-desc, .project-tech { font-size: 1.01rem; margin-bottom: 6px;}
+    .project-tech { font-style: italic; color: var(--muted);}
+    .project-link {
+      text-decoration: underline;
+      font-weight: 700;
+      font-size: 1.01rem;
+      cursor: pointer;
+      color: var(--primary);
+      align-self: flex-start;
+      transition: color 0.2s;
+    }
+    .project-link:hover { color: #234cb4; }
+    /* Contact Section */
+    #contact-section-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto 60px auto;
+      justify-content: center;
+      align-items: stretch;
+    }
+    #contact-info, #contact-form {
+      background: var(--card);
+      color: var(--text);
+      border-radius: 18px;
+      box-shadow: 0 4px 32px rgba(53, 115, 246, 0.09);
+      padding: 42px 34px;
+      min-width: 320px;
+      flex: 1;
+    }
+    #contact-section-content h2 {
+      font-weight: 800;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      color: var(--primary);
+      border-bottom: 3px solid var(--primary);
+      display: inline-block;
+      padding-bottom: 4px;
+    }
+    #contact-info h3 {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-top: 26px;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+      color: var(--text);
+    }
+    #contact-info p {
+      font-size: 1.03rem;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+    #contact-info div.contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+    #contact-info div.contact-item a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    #contact-info div.contact-item a:hover {
+      color: var(--primary);
+    }
+    #social-links {
+      margin-top: 28px;
+      color: var(--muted);
+    }
+    #social-links a {
+      margin-right: 18px;
+      color: var(--muted);
+      font-size: 1.35rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    #social-links a:hover {
+      color: var(--primary);
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    label {
+      font-size: 0.98rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--muted);
+    }
+    input, textarea {
+      background: var(--bg);
+      border-radius: 10px;
+      border: 2px solid #3573f6;
+      padding: 10px 14px;
+      font-size: 1rem;
+      font-family: "Inter", sans-serif;
+      color: var(--text);
+      resize: vertical;
+      transition: border-color 0.3s;
+    }
+    input:focus, textarea:focus { outline: none; border-color: #234cb4; }
+    textarea { min-height: 120px; }
+    button[type="submit"] {
+      background: var(--primary);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 14px 0;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(53, 115, 246, 0.3);
+      transition: background 0.25s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
+    button[type="submit"]:hover {
+      background: #234cb4;
+    }
+    /* About Me Resume */
+    .resume-grid {display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+    .resume-section {background:var(--card);border-radius:14px;padding:24px 18px;margin-bottom:22px;}
+    .resume-section h3 {font-size:1.22rem;margin-top:0;color:var(--primary);}
+    .resume-section ul, .resume-section p {margin-top:10px;line-height:1.62;}
+    .resume-list {margin-left:18px;}
+    /* Responsive */
+    @media (max-width: 900px) {
+      .resume-grid {grid-template-columns:1fr;}
+      main {padding:16px 4px;}
+    }
+    @media (max-width: 800px) {
+      .projects-list {flex-direction: column; align-items: center;}
+      #contact-section-content {flex-direction: column;}
+      #contact-info, #contact-form {max-width:100%; min-width:unset;}
+    }
+  </style>
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+  <nav>
+    <div class="logo">UA</div>
+    <div class="nav-items">
+      <a href="#" class="active" data-section="hero">Home</a>
+      <a href="#" data-section="about">About</a>
+      <a href="#" data-section="projects">Projects</a>
+      <a href="#" data-section="contact-section">Contact</a>
+      <button class="toggle-btn" id="toggle-theme"><i data-feather="moon"></i></button>
+    </div>
+  </nav>
+  <main>
+    <!-- Home Section -->
+    <section id="hero" class="section-view active">
+      <div class="hero-hi">Hi, I'm</div>
+      <div class="hero-name">Ujjwal Aditya</div>
+      <div class="hero-title">Python Developer | LLM Innovator | Automation Specialist</div>
+      <div class="hero-desc">
+        I build intelligent automation solutions and large language model apps using Python. <br>
+        Let's collaborate to create modern, impactful systems.
+      </div>
+      <div class="hero-btns">
+        <button class="hero-btn" data-section="projects"><i data-feather="folder"></i> View Projects</button>
+        <a href="https://drive.google.com/file/d/1npvOdvF_IaMjJBsEWS-zKTeWrm4WljtF/view?usp=sharing" download class="hero-btn secondary">
+  <i data-feather="download"></i> Download Resume
+</a>
+
+        <button class="hero-btn secondary" data-section="contact-section"><i data-feather="mail"></i> Contact Me</button>
+      </div>
+      <div class="hero-links">
+        <a href="mailto:ujjwaladitya0612@gmail.com" target="_blank" title="Email"><i data-feather="mail"></i></a>
+        <a href="https://www.linkedin.com/in/ujjwal-aditya-2b5a711a5/" target="_blank" title="LinkedIn"><i data-feather="linkedin"></i></a>
+        <a href="https://github.com/Ujjwalsoldier" target="_blank" title="GitHub"><i data-feather="github"></i></a>
+      </div>
+    </section>
+    <!-- About/Resume Section -->
+    <section id="about" class="section-view">
+      <h2 class="section-title">About Me</h2>
+      <div class="resume-grid">
+        <div class="resume-section">
+          <h3>Contact & Education</h3>
+          <ul class="resume-list">
+            <li><b>Name:</b> Ujjwal Aditya</li>
+            <li><b>Mobile:</b> +91 9667774189</li>
+            <li><b>Email:</b> ujjwaladitya0612@gmail.com</li>
+            <li><b>Location:</b> Gurugram, Haryana</li>
+            <li><b>Class X:</b> CBSE Board, 9.4 CGPA</li>
+            <li><b>Class XII:</b> CBSE Board, 86%</li>
+            <li><b>UG:</b> B.Tech. IT & Engineering, Galgotias college of Engineering and Technology (CGPA: 6.6)</li>
+          </ul>
+        </div>
+        <div class="resume-section">
+          <h3>Technical Skills</h3>
+          <ul class="resume-list">
+            <li>Languages: Python, Shell Scripting, GenAI, HTML, CSS</li>
+            <li>Frameworks: FastAPI, Django, Langchain</li>
+            <li>Cloud: AWS (EC2, S3, Lambda, CloudWatch, API Gateway)</li>
+            <li>Databases: MySQL, SQLite, PostgreSQL (Basic)</li>
+            <li>Tools: Git, Postman, Jira, Kibana, Grafana, Coralogix, VS Code, sigos, Selenium</li>
+            <li>Libraries: Boto3, SQLAlchemy, Pandas, Numpy, RAG, Agents, LLM, OpenAI</li>
+            <li>OS: Red Hat Enterprise Linux 7</li>
+          </ul>
+        </div>
+        <div class="resume-section">
+          <h3>Experience</h3>
+          <ul class="resume-list">
+            <li>Gupshup Technology – Technical Support (Jan 2024 – Aug 2024)</li>
+            <li>Telcovas – Technical Support (Feb 2023 – Nov 2023)</li>
+            <li>Cloudprism – Technical Support (Jul 2022 – Jan 2023)</li>
+          </ul>
+        </div>
+        <div class="resume-section">
+          <h3>Projects & Certifications</h3>
+          <ul class="resume-list">
+            <li>FastAPI Fundamentals (Udemy)</li>
+            <li>Python API Development, CRUD, JWT (Internal Projects)</li>
+            <li>RAG-based Document QA, Video Summarisation, Document Summarisation (LangChain, OpenAI)</li>
+          </ul>
+        </div>
+        <div class="resume-section" style="grid-column:1/3;">
+          <h3>Awards & Recognitions</h3>
+          <ul class="resume-list">
+            <li>APIDebugging Excellence – Gupshup Technology (2024): Commended for identifying/fixing FastAPI bugs in live services</li>
+            <li>Automation Ace – Telcovas (2023): Recognized for automating cloud infrastructure monitoring scripts</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- Projects Section -->
+    <section id="projects" class="section-view">
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-list">
+        <div class="project-card">
+          <div class="project-title">YouTube Tracker Bot</div>
+          <div class="project-desc">
+            Python bot that tracks YouTube uploads, summarizes videos, and sends notifications via WhatsApp, Telegram, or email.
+          </div>
+          <div class="project-tech">Tech: Python, Selenium, WhatsApp API, Telegram API</div>
+          <a href="https://github.com/Ujjwalsoldier/youtube-tracker" target="_blank" class="project-link">GitHub</a>
+        </div>
+        <div class="project-card">
+          <div class="project-title">LLM-powered Chatbot Platform</div>
+          <div class="project-desc">
+            Platform integrating Large Language Models for smart, context-aware conversations and automated info delivery.
+          </div>
+          <div class="project-tech">Tech: Python, OpenAI API, Flask, HTML/CSS/JS</div>
+          <a href="https://github.com/Ujjwalsoldier/llm-chatbot-platform" target="_blank" class="project-link">Live Demo</a>
+        </div>
+        <div class="project-card">
+          <div class="project-title">FastAPI Social Media App</div>
+          <div class="project-desc">
+            Online tool to format resumes into PDFs using customizable templates and smart parsing logic.
+          </div>
+          <div class="project-tech">Tech: Python, FastAPI, PostgreSQL, JWT</div>
+          <a href="https://github.com/Ujjwalsoldier/fastapi_social_media_" target="_blank" class="project-link">GitHub</a>
+        </div>
+      </div>
+    </section>
+    <!-- Contact Section -->
+    <section id="contact-section" class="section-view">
+      <h2>Get In Touch</h2>
+      <div id="contact-section-content">
+        <div id="contact-info">
+          <h3>Let's Connect</h3>
+          <p>
+            I’m always open to new opportunities and collaborations! Feel free to reach out for any queries or just to say hi!
+          </p>
+          <div class="contact-item">
+            <i data-feather="mail"></i> 
+            <a href="mailto:ujjwaladitya0612@gmail.com">ujjwaladitya0612@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <i data-feather="phone"></i> +91-9667774189
+          </div>
+          <div class="contact-item">
+            <i data-feather="map-pin"></i> Gurugram, India
+          </div>
+          <div id="social-links">
+            <a href="mailto:ujjwaladitya0612@gmail.com" title="Email"><i data-feather="mail"></i></a>
+            <a href="https://www.linkedin.com/in/ujjwal-aditya-2b5a711a5/" target="_blank" title="LinkedIn"><i data-feather="linkedin"></i></a>
+            <a href="https://github.com/Ujjwalsoldier" target="_blank" title="GitHub"><i data-feather="github"></i></a>
+          </div>
+        </div>
+        <div id="contact-form">
+          <form id="contactForm" autocomplete="off">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required />
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+            <button type="submit">Send Message <i data-feather="send"></i></button>
+            <div id="form-message"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script>
+    feather.replace();
+
+    function showSection(secId) {
+      document.querySelectorAll('.section-view').forEach(sec=>sec.classList.remove('active'));
+      document.getElementById(secId).classList.add('active');
+      feather.replace();
+    }
+    // Navigation
+    document.querySelectorAll('.nav-items a').forEach(nav=>{
+      nav.onclick = function(e){
+        e.preventDefault();
+        document.querySelectorAll('.nav-items a').forEach(n=>n.classList.remove('active'));
+        nav.classList.add('active');
+        showSection(nav.getAttribute('data-section'));
+      };
+    });
+    // Hero button page switch
+    document.querySelectorAll('.hero-btn[data-section]').forEach(btn=>{
+      btn.onclick = function(e){
+        showSection(btn.getAttribute('data-section'));
+        // set nav menu active
+        document.querySelectorAll('.nav-items a').forEach(n=>{
+          if(n.getAttribute('data-section')===btn.getAttribute('data-section')) n.classList.add('active');
+          else n.classList.remove('active');
+        });
+      }
+    });
+
+    // Download Resume = About Section
+    function showResume() {
+      showSection('about');
+      document.querySelectorAll('.nav-items a').forEach(n=>{
+        if(n.getAttribute('data-section')==='about') n.classList.add('active');
+        else n.classList.remove('active');
+      });
+    }
+
+    // Theme toggle
+    const themeBtn = document.getElementById("toggle-theme");
+    themeBtn.onclick = function () {
+      if (document.body.getAttribute("data-theme") === "light") {
+        document.body.removeAttribute("data-theme");
+        themeBtn.innerHTML = '<i data-feather="moon"></i>';
+      } else {
+        document.body.setAttribute("data-theme", "light");
+        themeBtn.innerHTML = '<i data-feather="sun"></i>';
+      }
+      feather.replace();
+    };
+
+    // Contact form handler
+    document.getElementById("contactForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const msgDiv = document.getElementById("form-message");
+      msgDiv.textContent = "Thank you! Your message has been sent 🚀";
+      this.reset();
+      setTimeout(() => { msgDiv.textContent = ""; }, 3500);
+    });
+  </script>
+</body>
+</html>
