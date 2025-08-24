@@ -6,6 +6,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css?family=Inter:400,700&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- HEAD ke andar yeh 2 line pakka honi chahiye -->
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+
   <style>
     :root {
       --primary: #3573f6;
@@ -21,15 +27,18 @@
       --card: #fff;
       --muted: #3573f6;
     }
+
     body {
-      font-family: "Inter", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      margin: 0;
-      min-height: 100vh;
-      transition: background 0.5s, color 0.5s;
-      /* Disable scroll! */
-    }
+    font-family: "Inter", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    min-height: 100dvh;             /* mobile-safe viewport */
+    transition: background 0.5s, color 0.5s;
+    /* overflow: hidden;  <-- REMOVE */
+    overflow-x: hidden;              /* only horizontal hide */
+      }
+
     nav {
       width: 100%;
       padding: 0 36px;
@@ -89,25 +98,29 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 30px 18px 0 18px;
-      height: calc(100vh - 64px - 56px); /* nav and footer height adjust */
+      /* height: calc(100vh - 64px - 56px);  <-- REMOVE */
+      min-height: calc(100dvh - 64px);      /* nav (64px) ke baad bachi screen */
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
     }
-    .section-view {
-      display: none;
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
-      position: absolute;
-      left: 0;
-      top: 0;
-      padding: 32px 16px 10px 16px;
-      box-sizing: border-box;
-      animation: fadeIn 0.5s;
-      background: var(--bg);
-    }
+   .section-view {
+    display: none;
+    width: 100%;
+    height: auto;                              /* auto height */
+    min-height: calc(100dvh - 64px);           /* kam se kam screen jitna */
+    overflow-y: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 32px 16px 10px 16px;
+    box-sizing: border-box;
+    animation: fadeIn 0.5s;
+    background: var(--bg);
+}
+
+   
     .section-view.active {
       display: block;
     }
@@ -373,6 +386,9 @@
   <nav>
     <div class="logo">UA</div>
     <div class="nav-items">
+    <h1 class="text-2xl md:text-4xl font-bold text-blue-600">
+      
+    </h1>
       <a href="#" class="active" data-section="hero">Home</a>
       <a href="#" data-section="about">About</a>
       <a href="#" data-section="projects">Projects</a>
